@@ -169,6 +169,14 @@ html_code = """
         #success-container h1 {
             font-size: 4rem;
         }
+        
+        #success-container h2 {
+            font-size: 3rem;
+            color: #fff;
+            margin: 20px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-family: 'Dancing Script', cursive;
+        }
 
         /* --- FIREWORKS CANVAS --- */
         canvas {
@@ -184,6 +192,7 @@ html_code = """
         /* Mobile Adjustments */
         @media (max-width: 600px) {
             h1 { font-size: 2.5rem; }
+            #success-container h2 { font-size: 2rem; }
             .container { padding: 2rem; width: 90%; }
         }
 
@@ -208,6 +217,7 @@ html_code = """
     <!-- Success Screen -->
     <div id="success-container">
         <h1>YAYYY!! 🥰💖</h1>
+        <h2>Indrajit's First Valentine....Damnnn</h2>
         <p style="font-size: 1.5rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
             You just made my heart the happiest! <br>
             Can't wait to celebrate with you! 🥂✨🎆
@@ -235,20 +245,26 @@ html_code = """
         }
         createHearts();
 
-        // --- 2. RUNAWAY 'NO' BUTTON LOGIC ---
+        // --- 2. RUNAWAY 'NO' BUTTON LOGIC (CONSTRAINED TO CENTER) ---
         const noBtn = document.getElementById('noBtn');
         const questionCard = document.getElementById('question-card');
         
-        // Function to move button
+        // Function to move button within safe center bounds
         function moveButton() {
-            // Get boundaries of the visible window
-            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
-            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
+            // Define a restricted area in the center (e.g., 60% of viewport)
+            // This prevents it from going off-screen
+            const safeWidth = window.innerWidth * 0.6; 
+            const safeHeight = window.innerHeight * 0.6;
 
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
+            // Calculate offsets to center this safe zone
+            const offsetX = (window.innerWidth - safeWidth) / 2;
+            const offsetY = (window.innerHeight - safeHeight) / 2;
 
-            noBtn.style.position = 'fixed'; // Change to fixed to breakout of container
+            // Random position within this safe zone
+            const randomX = offsetX + Math.random() * (safeWidth - noBtn.offsetWidth);
+            const randomY = offsetY + Math.random() * (safeHeight - noBtn.offsetHeight);
+
+            noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
