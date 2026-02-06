@@ -98,10 +98,6 @@ html_code = """
             max-width: 400px; 
             
             transition: all 0.5s ease;
-            
-            /* Critical for trapping the No button inside */
-            position: relative;
-            overflow: hidden;
         }
 
         h1 {
@@ -348,30 +344,28 @@ html_code = """
         }
         createBackground();
 
-        // --- 3. RUNAWAY 'NO' BUTTON LOGIC (CONSTRAINED TO CARD) ---
+        // --- 3. RUNAWAY 'NO' BUTTON LOGIC (RESTORED TO ORIGINAL CENTER SAFE ZONE) ---
         const noBtn = document.getElementById('noBtn');
         
         function moveButton() {
-            // We now calculate strictly based on the questionCard dimensions
-            // clientWidth includes padding but not border
-            const cardW = questionCard.clientWidth;
-            const cardH = questionCard.clientHeight;
-            
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
             const btnW = noBtn.offsetWidth;
             const btnH = noBtn.offsetHeight;
 
-            // Maximum bounds within the card
-            // We use a small buffer (15px) so it doesn't touch the absolute edge
-            const buffer = 15;
-            const maxLeft = cardW - btnW - buffer;
-            const maxTop = cardH - btnH - buffer;
+            // Safe zone: 30% of viewport in the center
+            const areaW = Math.max(vw * 0.3, btnW + 20);
+            const areaH = Math.max(vh * 0.3, btnH + 20);
 
-            // Generate random positions strictly within these bounds
-            const randomX = Math.max(buffer, Math.random() * maxLeft);
-            const randomY = Math.max(buffer, Math.random() * maxTop);
+            const minX = (vw - areaW) / 2;
+            const minY = (vh - areaH) / 2;
+            const maxX = minX + areaW - btnW;
+            const maxY = minY + areaH - btnH;
 
-            // Change to Absolute positioning (relative to the card parent)
-            noBtn.style.position = 'absolute'; 
+            const randomX = minX + Math.random() * (maxX - minX);
+            const randomY = minY + Math.random() * (maxY - minY);
+
+            noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
             noBtn.style.zIndex = '100';
