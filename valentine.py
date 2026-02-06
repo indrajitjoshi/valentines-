@@ -5,8 +5,8 @@ import streamlit.components.v1 as components
 # 1. PAGE CONFIGURATION
 # -----------------------------------------------------------------------------
 st.set_page_config(
-    page_title="Be My Valentine? 💖",
-    page_icon="💌",
+    page_title="Strategic Proposal 📄",
+    page_icon="💼",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
@@ -40,9 +40,9 @@ html_code = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine Proposal</title>
-    <!-- Importing Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Proposal</title>
+    <!-- Importing Classy Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
         /* --- RESET & BODY STYLES --- */
@@ -54,128 +54,157 @@ html_code = """
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            font-family: 'Poppins', sans-serif;
-            /* Romantic Gradient Background */
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            background: linear-gradient(to top, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Montserrat', sans-serif;
+            /* Classy Blue Gradient Background */
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
         }
 
-        /* --- FLOATING HEARTS BACKGROUND --- */
-        .heart-bg {
+        /* --- BACKGROUND ELEMENTS (SUBTLE PARTICLES INSTEAD OF HEARTS) --- */
+        .bg-element {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
             pointer-events: none;
             z-index: 0;
-            overflow: hidden;
-        }
-
-        .floating-heart {
-            position: absolute;
-            bottom: -100px;
-            color: rgba(255, 255, 255, 0.6);
             animation: floatUp linear infinite;
         }
 
         @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
         /* --- MAIN CARD --- */
         .container {
             text-align: center;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px); /* Glassmorphism */
-            padding: 3rem;
-            border-radius: 25px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             max-width: 90%;
-            width: 500px;
+            width: 600px;
             transition: all 0.5s ease;
         }
 
         h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
-            color: #d63384; /* Deep Pink */
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #1e3c72; /* Royal Blue */
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 25px;
         }
 
         p {
-            font-size: 1.2rem;
-            color: #6a1b9a;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .highlight {
+            font-weight: 600;
+            color: #1e3c72;
         }
 
         /* --- BUTTONS --- */
         .btn-group {
             position: relative;
-            height: 100px; /* Space for moving button */
+            height: 100px; 
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
         }
 
         button {
-            padding: 12px 30px;
-            font-size: 1.2rem;
+            padding: 14px 35px;
+            font-size: 1rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         #yesBtn {
-            background: linear-gradient(45deg, #ff00cc, #333399);
-            background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+            background: #1e3c72;
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
         }
 
         #yesBtn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(255, 117, 140, 0.6);
+            background: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 60, 114, 0.4);
         }
 
         #noBtn {
-            background: white;
-            color: #ff758c;
-            border: 2px solid #ff758c;
-            position: relative; /* Default position */
+            background: transparent;
+            color: #888;
+            border: 1px solid #ccc;
+            position: relative;
         }
 
-        /* --- SUCCESS MESSAGE HIDDEN INITIALLY --- */
+        #noBtn:hover {
+            color: #d9534f;
+            border-color: #d9534f;
+        }
+
+        /* --- SUCCESS MESSAGE --- */
         #success-container {
             display: none;
             z-index: 20;
             text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            max-width: 90%;
+            width: 700px;
         }
         
         #success-container h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
+            color: #1e3c72;
+            margin-bottom: 10px;
         }
         
         #success-container h2 {
-            font-size: 3rem;
-            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #c5a059; /* Goldish color for accent */
             margin: 20px 0;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            font-family: 'Dancing Script', cursive;
+            font-style: italic;
+        }
+
+        .kpi-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 4px solid #1e3c72;
+            text-align: left;
         }
 
         /* --- FIREWORKS CANVAS --- */
@@ -191,108 +220,106 @@ html_code = """
 
         /* Mobile Adjustments */
         @media (max-width: 600px) {
-            h1 { font-size: 2.5rem; }
-            #success-container h2 { font-size: 2rem; }
-            .container { padding: 2rem; width: 90%; }
+            h1 { font-size: 2.2rem; }
+            .container { padding: 2rem; }
+            button { padding: 12px 20px; font-size: 0.9rem; }
         }
 
     </style>
 </head>
 <body>
 
-    <!-- Floating Hearts Background -->
-    <div class="heart-bg" id="heart-bg"></div>
+    <!-- Subtle Background Elements -->
+    <div id="bg-container"></div>
 
     <!-- Question Screen -->
     <div class="container" id="question-card">
-        <h1>Will you be my Valentine? 🌹</h1>
-        <p>I promise chocolates, love, and bad jokes! 💕✨</p>
+        <h3>Executive Proposal</h3>
+        <h1>Strategic Alliance Opportunity</h1>
+        <p>
+            I've analyzed the data, and the synergy is undeniable. 
+            Proposed agenda includes <span class="highlight">dinner, drinks, and long-term value creation.</span><br><br>
+            Does this align with your Q1 objectives?
+        </p>
         
         <div class="btn-group">
-            <button id="yesBtn">Yes! 💘</button>
-            <button id="noBtn">No 😢</button>
+            <button id="yesBtn">Accept Offer 🤝</button>
+            <button id="noBtn">Decline</button>
         </div>
     </div>
 
     <!-- Success Screen -->
     <div id="success-container">
-        <h1>YAYYY!! 🥰💖</h1>
-        <h2>Indrajit's First Valentine....Damnnn</h2>
-        <p style="font-size: 1.5rem; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-            You just made my heart the happiest! <br>
-            Can't wait to celebrate with you! 🥂✨🎆
-        </p>
+        <h1>Deal Closed! 🥂</h1>
+        <h2>"Indrajit's First Valentine....Damnnn"</h2>
+        
+        <div class="kpi-box">
+            <p style="margin-bottom: 5px; font-weight: bold; color: #1e3c72;">MERGER UPDATE:</p>
+            <p style="margin: 0; font-size: 0.95rem; color: #555;">
+                Integration phase begins immediately. <br>
+                Projected ROI: <strong>Infinite Happiness.</strong><br>
+                Next Step: Celebration logistics are being finalized.
+            </p>
+        </div>
     </div>
 
     <!-- Canvas for Fireworks -->
     <canvas id="fireworks"></canvas>
 
     <script>
-        // --- 1. GENERATE FLOATING HEARTS BACKGROUND ---
-        function createHearts() {
-            const container = document.getElementById('heart-bg');
-            const heartCount = 20;
-            for (let i = 0; i < heartCount; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('floating-heart');
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(heart);
+        // --- 1. GENERATE SUBTLE BACKGROUND ---
+        function createBackground() {
+            const container = document.getElementById('bg-container');
+            const count = 15;
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.classList.add('bg-element');
+                const size = Math.random() * 50 + 20;
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                el.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(el);
             }
         }
-        createHearts();
+        createBackground();
 
         // --- 2. RUNAWAY 'NO' BUTTON LOGIC (CONSTRAINED TO CENTER) ---
         const noBtn = document.getElementById('noBtn');
         const questionCard = document.getElementById('question-card');
         
-        // Function to move button within TIGHT safe center bounds
         function moveButton() {
-            // Get viewport and button dimensions
             const vw = window.innerWidth;
             const vh = window.innerHeight;
             const btnW = noBtn.offsetWidth;
             const btnH = noBtn.offsetHeight;
 
-            // Define a restricted area in the absolute center (30% of viewport)
-            // ensuring it is at least big enough for the button movement
+            // Safe zone: 30% of viewport in the center
             const areaW = Math.max(vw * 0.3, btnW + 20);
             const areaH = Math.max(vh * 0.3, btnH + 20);
 
-            // Calculate the bounds to keep it centered
             const minX = (vw - areaW) / 2;
             const minY = (vh - areaH) / 2;
             const maxX = minX + areaW - btnW;
             const maxY = minY + areaH - btnH;
 
-            // Generate random coordinates within these bounds
             const randomX = minX + Math.random() * (maxX - minX);
             const randomY = minY + Math.random() * (maxY - minY);
 
             noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-            
-            // Add a higher z-index to ensure it floats above everything if it overlaps
             noBtn.style.zIndex = '100';
+            
+            // Funny changing text for MBA types
+            const rejectionTexts = ["404 Error", "System Glitch", "Access Denied", "Try Again"];
+            noBtn.innerText = rejectionTexts[Math.floor(Math.random() * rejectionTexts.length)];
         }
 
-        // Trigger on mouse hover
         noBtn.addEventListener('mouseover', moveButton);
-        // Trigger on touch (for mobile)
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevent clicking
-            moveButton();
-        });
-        
-        // Just in case they try to click it fast
-        noBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            moveButton();
-        });
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+        noBtn.addEventListener('click', (e) => { e.preventDefault(); moveButton(); });
 
 
         // --- 3. 'YES' BUTTON LOGIC & FIREWORKS ---
@@ -302,15 +329,12 @@ html_code = """
         const ctx = canvas.getContext('2d');
 
         yesBtn.addEventListener('click', () => {
-            // Hide question, show success
             questionCard.style.display = 'none';
             successContainer.style.display = 'block';
-            
-            // Start fireworks
             startFireworks();
         });
 
-        // --- FIREWORKS ENGINE (Vanilla JS) ---
+        // --- FIREWORKS ENGINE (Refined for Classy Gold/Blue) ---
         let particles = [];
         
         function resizeCanvas() {
@@ -321,16 +345,22 @@ html_code = """
         resizeCanvas();
 
         function createParticle(x, y) {
-            const particleCount = 30;
+            const particleCount = 40;
             for (let i = 0; i < particleCount; i++) {
+                // Gold and Blue Fireworks
+                const isGold = Math.random() > 0.5;
+                const color = isGold 
+                    ? `hsl(45, 80%, ${50 + Math.random() * 20}%)` // Gold range
+                    : `hsl(215, 80%, ${60 + Math.random() * 20}%)`; // Blue range
+
                 particles.push({
                     x: x,
                     y: y,
-                    color: `hsl(${Math.random() * 360}, 100%, 50%)`,
-                    radius: Math.random() * 4 + 1,
+                    color: color,
+                    radius: Math.random() * 3 + 1,
                     velocity: {
-                        x: (Math.random() - 0.5) * 6,
-                        y: (Math.random() - 0.5) * 6
+                        x: (Math.random() - 0.5) * 8,
+                        y: (Math.random() - 0.5) * 8
                     },
                     alpha: 1,
                     decay: Math.random() * 0.015 + 0.005
@@ -339,12 +369,10 @@ html_code = """
         }
 
         function animateFireworks() {
-            // Slight fade effect for trails
-            ctx.fillStyle = 'rgba(255, 154, 158, 0.2)'; // Matches background slightly
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear completely for crisp look
 
             particles.forEach((p, index) => {
-                p.velocity.y += 0.05; // Gravity
+                p.velocity.y += 0.05;
                 p.x += p.velocity.x;
                 p.y += p.velocity.y;
                 p.alpha -= p.decay;
@@ -366,16 +394,12 @@ html_code = """
         }
 
         function startFireworks() {
-            // Auto launch fireworks periodically
             setInterval(() => {
                 const x = Math.random() * canvas.width;
-                const y = Math.random() * (canvas.height / 2); // Top half
+                const y = Math.random() * (canvas.height / 2);
                 createParticle(x, y);
             }, 800);
-            
-            // Also launch on click (confetti burst style)
             createParticle(window.innerWidth / 2, window.innerHeight / 2);
-            
             animateFireworks();
         }
 
@@ -387,6 +411,4 @@ html_code = """
 # -----------------------------------------------------------------------------
 # 4. RENDER THE COMPONENT
 # -----------------------------------------------------------------------------
-# We use height=1000 to ensure it covers the screen on standard laptops
-# Scrolling is set to false to keep the app feeling like a native single page
 components.html(html_code, height=1000, scrolling=False)
