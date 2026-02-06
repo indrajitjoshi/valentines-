@@ -125,6 +125,22 @@ html_code = """
             color: #1e3c72;
         }
 
+        /* --- INPUT FIELDS --- */
+        input[type="text"] {
+            width: 80%;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #1e3c72;
+        }
+
         /* --- BUTTONS --- */
         .btn-group {
             position: relative;
@@ -148,13 +164,13 @@ html_code = """
             letter-spacing: 1px;
         }
 
-        #yesBtn {
+        #yesBtn, #loginBtn {
             background: #1e3c72;
             color: white;
             box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
         }
 
-        #yesBtn:hover {
+        #yesBtn:hover, #loginBtn:hover {
             background: #2a5298;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(30, 60, 114, 0.4);
@@ -197,6 +213,7 @@ html_code = """
             color: #c5a059; /* Goldish color for accent */
             margin: 20px 0;
             font-style: italic;
+            line-height: 1.4;
         }
 
         .kpi-box {
@@ -232,8 +249,18 @@ html_code = """
     <!-- Subtle Background Elements -->
     <div id="bg-container"></div>
 
-    <!-- Question Screen -->
-    <div class="container" id="question-card">
+    <!-- 1. LOGIN SCREEN -->
+    <div class="container" id="login-card">
+        <h3>Secure Access</h3>
+        <h1>Identity Verification</h1>
+        <p>Please enter your name to view the confidential proposal.</p>
+        <input type="text" id="nameInput" placeholder="Enter your name..." autocomplete="off">
+        <br>
+        <button id="loginBtn">Proceed to Proposal</button>
+    </div>
+
+    <!-- 2. QUESTION SCREEN (Initially Hidden) -->
+    <div class="container" id="question-card" style="display: none;">
         <h3>Executive Proposal</h3>
         <h1>Strategic Alliance Opportunity</h1>
         <p>
@@ -248,10 +275,10 @@ html_code = """
         </div>
     </div>
 
-    <!-- Success Screen -->
+    <!-- 3. SUCCESS SCREEN (Initially Hidden) -->
     <div id="success-container">
         <h1>Deal Closed! 🥂</h1>
-        <h2>"Indrajit's First Valentine....Damnnn"</h2>
+        <h2 id="final-message"></h2>
         
         <div class="kpi-box">
             <p style="margin-bottom: 5px; font-weight: bold; color: #1e3c72;">MERGER UPDATE:</p>
@@ -267,7 +294,35 @@ html_code = """
     <canvas id="fireworks"></canvas>
 
     <script>
-        // --- 1. GENERATE SUBTLE BACKGROUND ---
+        // GLOBAL VARIABLE FOR NAME
+        let partnerName = "Visitor";
+
+        // --- 1. LOGIN LOGIC ---
+        const loginCard = document.getElementById('login-card');
+        const loginBtn = document.getElementById('loginBtn');
+        const nameInput = document.getElementById('nameInput');
+        const questionCard = document.getElementById('question-card');
+
+        loginBtn.addEventListener('click', () => {
+            const val = nameInput.value.trim();
+            if (val) {
+                partnerName = val;
+                // Transition to next screen
+                loginCard.style.display = 'none';
+                questionCard.style.display = 'block';
+            } else {
+                nameInput.style.borderColor = '#d9534f';
+                setTimeout(() => nameInput.style.borderColor = '#ddd', 1000);
+            }
+        });
+
+        // Also allow Enter key
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+
+
+        // --- 2. GENERATE SUBTLE BACKGROUND ---
         function createBackground() {
             const container = document.getElementById('bg-container');
             const count = 15;
@@ -285,9 +340,8 @@ html_code = """
         }
         createBackground();
 
-        // --- 2. RUNAWAY 'NO' BUTTON LOGIC (CONSTRAINED TO CENTER) ---
+        // --- 3. RUNAWAY 'NO' BUTTON LOGIC (CONSTRAINED TO CENTER) ---
         const noBtn = document.getElementById('noBtn');
-        const questionCard = document.getElementById('question-card');
         
         function moveButton() {
             const vw = window.innerWidth;
@@ -322,13 +376,17 @@ html_code = """
         noBtn.addEventListener('click', (e) => { e.preventDefault(); moveButton(); });
 
 
-        // --- 3. 'YES' BUTTON LOGIC & FIREWORKS ---
+        // --- 4. 'YES' BUTTON LOGIC & FIREWORKS ---
         const yesBtn = document.getElementById('yesBtn');
         const successContainer = document.getElementById('success-container');
+        const finalMessage = document.getElementById('final-message');
         const canvas = document.getElementById('fireworks');
         const ctx = canvas.getContext('2d');
 
         yesBtn.addEventListener('click', () => {
+            // Set dynamic message
+            finalMessage.innerText = `${partnerName}, Congratulations on becoming Indrajit's First Valentine!`;
+            
             questionCard.style.display = 'none';
             successContainer.style.display = 'block';
             startFireworks();
