@@ -249,24 +249,35 @@ html_code = """
         const noBtn = document.getElementById('noBtn');
         const questionCard = document.getElementById('question-card');
         
-        // Function to move button within safe center bounds
+        // Function to move button within TIGHT safe center bounds
         function moveButton() {
-            // Define a restricted area in the center (e.g., 60% of viewport)
-            // This prevents it from going off-screen
-            const safeWidth = window.innerWidth * 0.6; 
-            const safeHeight = window.innerHeight * 0.6;
+            // Get viewport and button dimensions
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const btnW = noBtn.offsetWidth;
+            const btnH = noBtn.offsetHeight;
 
-            // Calculate offsets to center this safe zone
-            const offsetX = (window.innerWidth - safeWidth) / 2;
-            const offsetY = (window.innerHeight - safeHeight) / 2;
+            // Define a restricted area in the absolute center (30% of viewport)
+            // ensuring it is at least big enough for the button movement
+            const areaW = Math.max(vw * 0.3, btnW + 20);
+            const areaH = Math.max(vh * 0.3, btnH + 20);
 
-            // Random position within this safe zone
-            const randomX = offsetX + Math.random() * (safeWidth - noBtn.offsetWidth);
-            const randomY = offsetY + Math.random() * (safeHeight - noBtn.offsetHeight);
+            // Calculate the bounds to keep it centered
+            const minX = (vw - areaW) / 2;
+            const minY = (vh - areaH) / 2;
+            const maxX = minX + areaW - btnW;
+            const maxY = minY + areaH - btnH;
+
+            // Generate random coordinates within these bounds
+            const randomX = minX + Math.random() * (maxX - minX);
+            const randomY = minY + Math.random() * (maxY - minY);
 
             noBtn.style.position = 'fixed'; 
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+            
+            // Add a higher z-index to ensure it floats above everything if it overlaps
+            noBtn.style.zIndex = '100';
         }
 
         // Trigger on mouse hover
