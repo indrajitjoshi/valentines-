@@ -81,43 +81,48 @@ html_code = """
             100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
-        /* --- MAIN CARD --- */
+        /* --- MAIN CARD (REEL LAYOUT 9:16 OPTIMIZED) --- */
         .container {
             text-align: center;
             z-index: 10;
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
-            padding: 4rem;
-            border-radius: 12px;
+            /* Reduced padding for narrower width */
+            padding: 2.5rem 1.5rem; 
+            border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.4);
-            max-width: 90%;
-            width: 600px;
+            
+            /* Enforce Mobile/Reel Width */
+            width: 90%;
+            max-width: 400px; 
+            
             transition: all 0.5s ease;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 2.5rem; /* Slightly smaller for mobile width */
             color: #1e3c72; /* Royal Blue */
             margin-bottom: 15px;
             letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
         h3 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #888;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #444;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .highlight {
@@ -127,15 +132,16 @@ html_code = """
 
         /* --- INPUT FIELDS --- */
         input[type="text"] {
-            width: 80%;
-            padding: 12px 15px;
+            width: 100%;
+            padding: 14px 15px;
             margin-bottom: 25px;
             border: 2px solid #ddd;
-            border-radius: 6px;
+            border-radius: 8px;
             font-family: 'Montserrat', sans-serif;
             font-size: 1rem;
             outline: none;
             transition: border-color 0.3s;
+            text-align: center;
         }
         input[type="text"]:focus {
             border-color: #1e3c72;
@@ -144,18 +150,20 @@ html_code = """
         /* --- BUTTONS --- */
         .btn-group {
             position: relative;
-            height: 100px; 
+            height: 120px; /* More vertical space for mobile */
             display: flex;
+            flex-direction: column; /* Stack buttons on mobile reel view */
             justify-content: center;
             align-items: center;
-            gap: 25px;
+            gap: 15px;
         }
 
         button {
-            padding: 14px 35px;
+            width: 100%; /* Full width buttons */
+            padding: 14px 20px;
             font-size: 1rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'Montserrat', sans-serif;
@@ -194,22 +202,24 @@ html_code = """
             z-index: 20;
             text-align: center;
             background: rgba(255, 255, 255, 0.95);
-            padding: 4rem;
-            border-radius: 12px;
+            padding: 3rem 1.5rem;
+            border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-            max-width: 90%;
-            width: 700px;
+            
+            /* Enforce Mobile/Reel Width */
+            width: 90%;
+            max-width: 400px;
         }
         
         #success-container h1 {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: #1e3c72;
             margin-bottom: 10px;
         }
         
         #success-container h2 {
             font-family: 'Playfair Display', serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #c5a059; /* Goldish color for accent */
             margin: 20px 0;
             font-style: italic;
@@ -218,10 +228,11 @@ html_code = """
 
         .kpi-box {
             margin-top: 30px;
-            padding: 20px;
+            padding: 15px;
             background: #f8f9fa;
             border-left: 4px solid #1e3c72;
             text-align: left;
+            border-radius: 4px;
         }
 
         /* --- FIREWORKS CANVAS --- */
@@ -233,13 +244,6 @@ html_code = """
             height: 100%;
             z-index: 15;
             pointer-events: none;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .container { padding: 2rem; }
-            button { padding: 12px 20px; font-size: 0.9rem; }
         }
 
     </style>
@@ -385,7 +389,7 @@ html_code = """
 
         yesBtn.addEventListener('click', () => {
             // Set dynamic message
-            finalMessage.innerText = `${partnerName}, Congratulations on becoming Indrajit's First Valentine!`;
+            finalMessage.innerText = `${partnerName}, Congratulations on becoming Indrajit's Valentine!`;
             
             questionCard.style.display = 'none';
             successContainer.style.display = 'block';
